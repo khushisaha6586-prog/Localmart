@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <!-- Product Image -->
+        <div class="col-md-6">
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}"
+                     class="img-fluid rounded shadow"
+                     alt="{{ product.name }}">
+            {% else %}
+                <img src="https://via.placeholder.com/500x400?text=No+Image"
+                     class="img-fluid rounded shadow"
+                     alt="No Image">
+            {% endif %}
+
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+
+            <h1>{{ product.name }}</h1>
+
+            <hr>
+
+            <h4 class="text-success">
+                ₹{{ product.price }}
+            </h4>
+
+            <p>
+                <strong>Category:</strong>
+                {{ product.category }}
+            </p>
+
+            <p>
+                <strong>Stock:</strong>
+                {{ product.stock }}
+            </p>
+
+            <p>
+                <strong>Description:</strong>
+            </p>
+
+            <p>
+                {{ product.description }}
+            </p>
+
+            <a href="/cart/add/{{ product.id }}/"
+               class="btn btn-success btn-lg">
+                🛒 Add to Cart
+            </a>
+
+            <a href="/products/"
+               class="btn btn-secondary btn-lg">
+                ← Back to Products
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

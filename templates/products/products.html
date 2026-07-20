@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h1 class="mb-4 text-center">
+        🛒 Local Mart Product Catalogue
+    </h1>
+
+    <!-- Search + Category Filter -->
+    <form method="get" class="mb-4">
+
+        <div class="row">
+
+            <div class="col-md-7">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Search products..."
+                    value="{{ request.GET.search }}">
+            </div>
+
+            <div class="col-md-3">
+                <select
+                    name="category"
+                    class="form-select">
+
+                    <option value="">All Categories</option>
+
+                    {% for category in categories %}
+
+                    <option
+                        value="{{ category }}"
+                        {% if request.GET.category == category %}selected{% endif %}>
+
+                        {{ category }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <button
+                    type="submit"
+                    class="btn btn-success w-100">
+                    Search
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div class="row">
+
+        {% for product in products %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                {% if product.image %}
+                    <img src="{{ product.image.url }}"
+                    class="img-fluid rounded shadow w-100"
+                    style="height:350px; object-fit:cover;"
+                    alt="{{ product.name}}">
+                {% endif %}
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+                        <a href="/products/{{ product.id }}/"
+                        class="text-decoration-none">
+                        {{ product.name }}
+                        </a>
+                    </h4>
+
+                    <p>
+                        <strong>Category:</strong>
+                        {{ product.category }}
+                    </p>
+
+                    <p>
+                        <strong>Price:</strong>
+                        ₹{{ product.price }}
+                    </p>
+
+                    <p>
+                        <strong>Stock:</strong>
+                        {{ product.stock }}
+                    </p>
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+                </div>
+
+                <div class="card-footer bg-white">
+
+                    <a href="/cart/add/{{ product.id }}/"
+                       class="btn btn-success w-100">
+                        🛒 Add to Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                No Products Available
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

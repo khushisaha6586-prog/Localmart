@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">📦 My Orders</h2>
+
+    {% if orders %}
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-primary">
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Order Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for order in orders %}
+
+        <tr>
+
+            <td>{{ order.product.name }}</td>
+
+            <td>{{ order.quantity }}</td>
+
+            <td>{{ order.order_date }}</td>
+
+            <td>
+                {% if order.status == "Pending" %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+
+                {% elif order.status == "Delivered" %}
+                    <span class="badge bg-success">Delivered</span>
+
+                {% else %}
+                    <span class="badge bg-secondary">
+                        {{ order.status }}
+                    </span>
+                {% endif %}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">
+        You haven't placed any orders yet.
+    </div>
+
+    <a href="/products/" class="btn btn-primary">
+        Shop Now
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
